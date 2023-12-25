@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { NavigationHeader } from './Components/HeaderNavigation';
 import { AppInventory } from './AppInventory/AppInventory';

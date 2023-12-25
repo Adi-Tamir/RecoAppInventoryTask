@@ -3,7 +3,7 @@ module.exports = function (app) {
     app.use(
         '/api',
         createProxyMiddleware({
-            target: 'http://localhost:5000',
+            target: 'https://578e-37-214-64-221.ngrok-free.app',
             changeOrigin: true,
         })
     );
