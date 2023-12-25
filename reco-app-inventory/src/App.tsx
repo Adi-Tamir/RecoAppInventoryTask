@@ -1,26 +1,23 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { NavigationHeader } from './Components/HeaderNavigation';
+import { AppInventory } from './AppInventory/AppInventory';
+import { styled } from '@stitches/react';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PageContainer>
+    <NavigationHeader />
+    <AppInventory />
+  </PageContainer>
   );
 }
 
 export default App;
+
+const PageContainer = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+});
