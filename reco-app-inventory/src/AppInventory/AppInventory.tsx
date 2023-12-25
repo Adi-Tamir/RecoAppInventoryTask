@@ -35,7 +35,6 @@ export function AppInventory() {
             .then(data => setData(data));
     }, []);
 
-    console.log(data);
     
 
     return (
