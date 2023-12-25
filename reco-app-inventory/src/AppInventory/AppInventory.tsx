@@ -1,50 +1,53 @@
-import { styled } from '@stitches/react';
-import React, { useEffect, useState } from 'react';
-import { PageHeader } from '../Components/Text';
-import { AppInventoryTable } from './AppInventoryTable';
-import { Loading } from '../Components/Loading';
+import { styled } from "@stitches/react";
+import React, { useEffect, useState } from "react";
+import { PageHeader } from "../Components/Text";
+import { AppInventoryTable } from "./AppInventoryTable";
+import { Loading } from "../Components/Loading";
+import { AppInventorySlideOver } from "./AppInventorySLideOver";
 
-const ROW_OPTIONS = [25, 50];
 
 interface AppData {
-    appRows?: any[]; // Replace 'any' with the actual type of appData if possible
-    totalCount?: number; // Replace 'number' with the actual type of totalCount if possible
-  }
+  appRows?: any[]; 
+  totalCount?: number; 
+}
 
 export function AppInventory() {
+  const [rows, setRows] = useState(25);
 
-    const [rows, setRows] = useState(25);
-   
-    const [data, setData] = useState<AppData | null>(null);
+  const [data, setData] = useState<AppData | null>(null);
 
-    const body = { pageNumber: 0, pageSize: rows}
+  const [chosenRow, setChosenRow] = useState(null);
 
-    const requestHeaders = new Headers();
+  const body = { pageNumber: 0, pageSize: rows };
 
-    requestHeaders.append("Content-Type", "application/json");
+  const requestHeaders = new Headers();
 
-    const params : RequestInit = {
-        method: "PUT",
-        headers: requestHeaders,
-        body: JSON.stringify(body)
-      }
- 
-    useEffect(() => {
-        fetch('/api/v1/app-service/get-apps', params)
-            .then(response => response.json())
-            .then(data => setData(data));
-    }, []);
+  requestHeaders.append("Content-Type", "application/json");
 
-    
+  const params: RequestInit = {
+    method: "PUT",
+    headers: requestHeaders,
+    body: JSON.stringify(body),
+  };
 
-    return (
-      <AppInventoryContainer>
-        <PageHeader>App Inventory</PageHeader>
-        {data ? <><AppInventoryTable rows={data.appRows} />
-        <PageHeader>{data.totalCount}</PageHeader></> : <Loading />}
-      </AppInventoryContainer>
-    );
-  }
+  useEffect(() => {
+    fetch("/api/v1/app-service/get-apps", params)
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }, []);
+  console.log(data);
 
-  const AppInventoryContainer = styled('div', {margin: '24px'});
+  return (
+    <AppInventoryContainer>
+      <PageHeader>App Inventory</PageHeader>
+      {data ? (
+        <AppInventoryTable rows={data.appRows} rowsPerPage={rows} totalRows={150} setRow={setChosenRow} />
+      ) : (
+        <Loading />
+      )}
+      {chosenRow && <AppInventorySlideOver app={chosenRow} />}
+    </AppInventoryContainer>
+  );
+}
 
+const AppInventoryContainer = styled("div", { margin: "24px" });

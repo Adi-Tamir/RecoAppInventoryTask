@@ -3,7 +3,7 @@ import React from 'react';
 
 export function NavigationHeader() {
     return (
-      <Header>Hi</Header>
+      <Header></Header>
     );
   }
 
